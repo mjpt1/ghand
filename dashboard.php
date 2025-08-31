@@ -25,6 +25,10 @@ header('Content-Type: text/html; charset=utf-8');
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Socket.io Client -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <style>
         body {
             font-family: 'Vazirmatn', sans-serif;
@@ -33,32 +37,7 @@ header('Content-Type: text/html; charset=utf-8');
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-heartbeat"></i>
-                سیستم مدیریت سلامت
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">داشبورد</a>
-                    </li>
-                </ul>
-                <div class="d-flex align-items-center">
-                    <span class="navbar-text text-white me-3">
-                        <?php echo htmlspecialchars($user_email); ?> (<?php echo htmlspecialchars($user_role); ?>)
-                    </span>
-                    <a href="logout.php" class="btn btn-danger">
-                        <i class="fas fa-sign-out-alt"></i> خروج
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php include 'dashboard_nav.php'; ?>
 
     <main>
         <?php
