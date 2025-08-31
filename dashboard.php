@@ -1,0 +1,93 @@
+<?php
+session_start();
+require_once 'includes/database.php';
+
+// If the user is not logged in, redirect to the login page.
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
+// Get user data from session
+$user_id = $_SESSION['user_id'];
+$user_email = $_SESSION['user_email'];
+$user_role = $_SESSION['user_role'];
+
+header('Content-Type: text/html; charset=utf-8');
+?>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد - سیستم مدیریت سلامت</title>
+    <!-- Bootstrap 5 RTL CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-heartbeat"></i>
+                سیستم مدیریت سلامت
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">داشبورد</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <span class="navbar-text text-white me-3">
+                        <?php echo htmlspecialchars($user_email); ?> (<?php echo htmlspecialchars($user_role); ?>)
+                    </span>
+                    <a href="logout.php" class="btn btn-danger">
+                        <i class="fas fa-sign-out-alt"></i> خروج
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <?php
+        // Route to the correct dashboard view based on user role
+        switch ($user_role) {
+            case 'patient':
+                include 'views/patient_dashboard.php';
+                break;
+            case 'doctor':
+                echo '<div class="container mt-4"><div class="alert alert-info">داشبورد پزشک به زودی آماده می‌شود.</div></div>';
+                break;
+            case 'pharmacy':
+                echo '<div class="container mt-4"><div class="alert alert-info">داشبورد داروخانه به زودی آماده می‌شود.</div></div>';
+                break;
+            case 'admin':
+                echo '<div class="container mt-4"><div class="alert alert-info">داشبورد ادمین به زودی آماده می‌شود.</div></div>';
+                break;
+            default:
+                echo '<div class="container mt-4"><div class="alert alert-danger">نقش کاربری نامعتبر است.</div></div>';
+                break;
+        }
+        ?>
+    </main>
+
+    <footer class="text-center mt-5 py-3 bg-light">
+        <p class="mb-0">&copy; <?php echo date('Y'); ?> سیستم وب مدیریت جامع سلامت</p>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
