@@ -1,4 +1,7 @@
 <?php
+// --- Path Constants ---
+define('ROOT_PATH', dirname(__DIR__)); // The project root directory
+
 // --- Database Configuration ---
 // As per the project requirements, edit these details during installation.
 

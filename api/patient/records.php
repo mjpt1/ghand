@@ -2,9 +2,9 @@
 // --- API Endpoint for Patient Health Records ---
 
 // Required files
-require_once __DIR__ . '/../../includes/config.php';
-require_once __DIR__ . '/../../includes/database.php';
-require_once __DIR__ . '/../../api/middleware/auth_middleware.php';
+require_once dirname(__DIR__, 2) . '/includes/config.php';
+require_once ROOT_PATH . '/includes/database.php';
+require_once ROOT_PATH . '/api/middleware/auth_middleware.php';
 
 // 1. Validate the token and get user data
 $auth_user = validate_token();

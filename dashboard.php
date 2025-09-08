@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once 'includes/database.php';
+require_once __DIR__ . '/includes/config.php';
+require_once ROOT_PATH . '/includes/database.php';
 
 // If the user is not logged in, redirect to the login page.
 if (!isset($_SESSION['user_id'])) {
@@ -44,13 +45,13 @@ header('Content-Type: text/html; charset=utf-8');
         // Route to the correct dashboard view based on user role
         switch ($user_role) {
             case 'patient':
-                include 'views/patient_dashboard.php';
+                include ROOT_PATH . '/views/patient_dashboard.php';
                 break;
             case 'doctor':
-                echo '<div class="container mt-4"><div class="alert alert-info">داشبورد پزشک به زودی آماده می‌شود.</div></div>';
+                include ROOT_PATH . '/views/doctor_dashboard.php';
                 break;
             case 'pharmacy':
-                echo '<div class="container mt-4"><div class="alert alert-info">داشبورد داروخانه به زودی آماده می‌شود.</div></div>';
+                include ROOT_PATH . '/views/pharmacy_dashboard.php';
                 break;
             case 'admin':
                 echo '<div class="container mt-4"><div class="alert alert-info">داشبورد ادمین به زودی آماده می‌شود.</div></div>';

@@ -2,12 +2,11 @@
 // --- API Login Endpoint ---
 
 // Required files
-require_once __DIR__ . '/../../includes/config.php';
-require_once __DIR__ . '/../../includes/database.php';
-require_once __DIR__ . '/../../includes/lib/php-jwt/JWT.php';
-require_once __DIR__ . '/../../includes/lib/php-jwt/Key.php';
+require_once dirname(__DIR__, 2) . '/includes/config.php'; // Get config first to define ROOT_PATH
+require_once ROOT_PATH . '/includes/database.php';
+require_once ROOT_PATH . '/includes/lib/php-jwt/src/JWT.php';
 
-use Firebase\JWT\JWT;
+use JWT\JWT;
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

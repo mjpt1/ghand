@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once 'includes/config.php';
-require_once 'includes/database.php';
-require_once 'includes/services/PaymentService.php';
+require_once __DIR__ . '/includes/config.php';
+require_once ROOT_PATH . '/includes/database.php';
+require_once ROOT_PATH . '/includes/services/PaymentService.php';
 
 // Authenticate user
 if (!isset($_SESSION['user_id'])) {

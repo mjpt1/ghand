@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once 'includes/database.php';
+require_once __DIR__ . '/includes/config.php';
+require_once ROOT_PATH . '/includes/database.php';
 
 // --- Authentication & Authorization ---
 

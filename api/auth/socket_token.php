@@ -4,10 +4,10 @@
 session_start();
 
 // Required files
-require_once __DIR__ . '/../../includes/config.php';
-require_once __DIR__ . '/../../includes/lib/php-jwt/JWT.php';
+require_once dirname(__DIR__, 2) . '/includes/config.php';
+require_once ROOT_PATH . '/includes/lib/php-jwt/src/JWT.php';
 
-use Firebase\JWT\JWT;
+use JWT\JWT;
 
 // Check if the user is logged in via PHP session
 if (!isset($_SESSION['user_id'])) {

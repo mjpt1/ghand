@@ -1,15 +1,10 @@
 <?php
 // --- JWT Authentication Middleware ---
 
-require_once __DIR__ . '/../../includes/lib/php-jwt/JWT.php';
-require_once __DIR__ . '/../../includes/lib/php-jwt/Key.php';
-require_once __DIR__ . '/../../includes/lib/php-jwt/ExpiredException.php';
-require_once __DIR__ . '/../../includes/lib/php-jwt/SignatureInvalidException.php';
+require_once dirname(__DIR__, 2) . '/includes/config.php';
+require_once ROOT_PATH . '/includes/lib/php-jwt/src/JWT.php';
 
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-use Firebase\JWT\ExpiredException;
-use Firebase\JWT\SignatureInvalidException;
+use JWT\JWT;
 
 function validate_token() {
     // Check for the Authorization header
@@ -32,21 +27,19 @@ function validate_token() {
     $jwt = $header_parts[1];
 
     try {
-        // Decode and verify the token
-        $decoded = JWT::decode($jwt, new Key(JWT_SECRET, 'HS256'));
+        // Decode and verify the token using the new library's signature
+        $decoded = JWT::decode($jwt, JWT_SECRET, ['HS256']);
+
         // Return the decoded payload (which contains user data)
         return $decoded->data;
-    } catch (ExpiredException $e) {
+    } catch (\Exception $e) {
         http_response_code(401);
-        echo json_encode(['error' => 'Token has expired.']);
-        exit;
-    } catch (SignatureInvalidException $e) {
-        http_response_code(401);
-        echo json_encode(['error' => 'Invalid token signature.']);
-        exit;
-    } catch (Exception $e) {
-        http_response_code(401);
-        echo json_encode(['error' => 'Invalid token.']);
+        // Provide a more specific error message based on the exception
+        if ($e->getMessage() === 'Expired token') {
+            echo json_encode(['error' => 'Token has expired.']);
+        } else {
+            echo json_encode(['error' => 'Invalid token: ' . $e->getMessage()]);
+        }
         exit;
     }
 }
